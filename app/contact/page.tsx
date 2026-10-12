@@ -22,6 +22,11 @@ const SUB_CATEGORIES_MAP: Record<string, string[]> = {
     "Digital Standee",
     "Digital Touch Table",
   ],
+  "Business Automation": [
+    "ERP & Business Operations Automation",
+    "AI-Powered Business Automation",
+    "CRM & Customer Experience Automation",
+  ],
   "Internship and Training": [
     "Rust Development",
     "App & Web Development",
@@ -82,7 +87,7 @@ export default function ContactPage() {
       const formData = new FormData(form);
       formData.append(
         "access_key",
-        process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY || ""
+        process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY || "",
       );
       formData.append("subject", "New Contact Inquiry - AMIACH Technologies");
       formData.append("from_name", "AMIACH Technologies Website");
@@ -105,7 +110,7 @@ export default function ContactPage() {
     } catch (error) {
       console.error("Form submission error:", error);
       alert(
-        "Unable to send your inquiry. Please check your internet connection and try again."
+        "Unable to send your inquiry. Please check your internet connection and try again.",
       );
       setShowCaptcha(false);
       setIsVerified(false);
@@ -149,7 +154,8 @@ export default function ContactPage() {
                     Send Your Inquiry
                   </h2>
                   <p className="text-[10px] text-slate-500">
-                    Tell us about your project and we&apos;ll get back to you shortly.
+                    Tell us about your project and we&apos;ll get back to you
+                    shortly.
                   </p>
                 </div>
 
@@ -160,7 +166,8 @@ export default function ContactPage() {
                       Inquiry Sent Successfully!
                     </h3>
                     <p className="text-[11px] text-emerald-700">
-                      Thank you for reaching out. Our team will contact you shortly.
+                      Thank you for reaching out. Our team will contact you
+                      shortly.
                     </p>
                     <button
                       onClick={resetForm}
@@ -188,6 +195,7 @@ export default function ContactPage() {
                     />
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                      {/* Name Input with String-only Validation */}
                       <div className="space-y-0.5">
                         <label className="text-[10px] font-bold text-slate-800">
                           Name <span className="text-red-500">*</span>
@@ -196,11 +204,25 @@ export default function ContactPage() {
                           type="text"
                           name="name"
                           required
+                          pattern="^[A-Za-z\s]+$"
+                          title="Name should only contain letters and spaces"
                           placeholder="Enter your name"
+                          onKeyDown={(e) => {
+                            if (
+                              !/[a-zA-Z\s]/.test(e.key) &&
+                              e.key !== "Backspace" &&
+                              e.key !== "Tab" &&
+                              e.key !== "ArrowLeft" &&
+                              e.key !== "ArrowRight"
+                            ) {
+                              e.preventDefault();
+                            }
+                          }}
                           className="w-full px-2.5 py-1.5 rounded-lg bg-white/80 border border-slate-300 text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-[#D9232D] focus:border-[#D9232D] transition-all capitalize"
                         />
                       </div>
 
+                      {/* Phone Number Input with Numeric-only Validation */}
                       <div className="space-y-0.5">
                         <label className="text-[10px] font-bold text-slate-800">
                           Phone Number <span className="text-red-500">*</span>
@@ -209,13 +231,22 @@ export default function ContactPage() {
                           type="tel"
                           name="phone"
                           required
+                          pattern="^[0-9+\s-]{7,15}$"
+                          title="Please enter a valid phone number (digits only, 7 to 15 numbers)"
                           placeholder="+91 00000 00000"
+                          onInput={(e: React.FormEvent<HTMLInputElement>) => {
+                            e.currentTarget.value = e.currentTarget.value.replace(
+                              /[^0-9+\s-]/g,
+                              "",
+                            );
+                          }}
                           className="w-full px-2.5 py-1.5 rounded-lg bg-white/80 border border-slate-300 text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-[#D9232D] focus:border-[#D9232D] transition-all"
                         />
                       </div>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                      {/* Email Input with Email Validation */}
                       <div className="space-y-0.5">
                         <label className="text-[10px] font-bold text-slate-800">
                           Email Id <span className="text-red-500">*</span>
@@ -224,6 +255,8 @@ export default function ContactPage() {
                           type="email"
                           name="email"
                           required
+                          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                          title="Please enter a valid email address (e.g. name@domain.com)"
                           placeholder="example@domain.com"
                           className="w-full px-2.5 py-1.5 rounded-lg bg-white/80 border border-slate-300 text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-[#D9232D] focus:border-[#D9232D] transition-all"
                         />
@@ -245,7 +278,8 @@ export default function ContactPage() {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                       <div className="space-y-0.5">
                         <label className="text-[10px] font-bold text-slate-800">
-                          Select Category <span className="text-red-500">*</span>
+                          Select Category{" "}
+                          <span className="text-red-500">*</span>
                         </label>
                         <select
                           name="category"
@@ -274,7 +308,9 @@ export default function ContactPage() {
                           required
                           disabled={!selectedCategory}
                           value={selectedSubCategory}
-                          onChange={(e) => setSelectedSubCategory(e.target.value)}
+                          onChange={(e) =>
+                            setSelectedSubCategory(e.target.value)
+                          }
                           className="w-full px-2.5 py-1.5 rounded-lg bg-white/80 border border-slate-300 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-[#D9232D] focus:border-[#D9232D] transition-all cursor-pointer disabled:bg-slate-100 disabled:cursor-not-allowed"
                         >
                           <option value="" disabled>
@@ -283,18 +319,21 @@ export default function ContactPage() {
                               : "Choose category first"}
                           </option>
                           {selectedCategory &&
-                            SUB_CATEGORIES_MAP[selectedCategory]?.map((subCat) => (
-                              <option key={subCat} value={subCat}>
-                                {subCat}
-                              </option>
-                            ))}
+                            SUB_CATEGORIES_MAP[selectedCategory]?.map(
+                              (subCat) => (
+                                <option key={subCat} value={subCat}>
+                                  {subCat}
+                                </option>
+                              ),
+                            )}
                         </select>
                       </div>
                     </div>
 
                     <div className="space-y-0.5">
                       <label className="text-[10px] font-bold text-slate-800">
-                        Project Description <span className="text-red-500">*</span>
+                        Project Description{" "}
+                        <span className="text-red-500">*</span>
                       </label>
                       <textarea
                         name="message"
@@ -318,10 +357,9 @@ export default function ContactPage() {
               </div>
             </div>
 
-            {/* Right Column: Compact Contact Details Card + Clickable Map with Pin */}
+            {/* Right Column: Contact Details Card */}
             <div className="lg:col-span-5 h-full">
               <div className="p-3.5 rounded-2xl bg-white border border-slate-200 shadow-lg text-slate-800 h-full flex flex-col justify-between space-y-2.5">
-                {/* Header */}
                 <div>
                   <span className="text-[9px] font-bold uppercase tracking-widest text-[#D9232D]">
                     GET IN TOUCH
@@ -331,9 +369,7 @@ export default function ContactPage() {
                   </p>
                 </div>
 
-                {/* Compact Details List */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-2 text-[10px]">
-                  {/* Location with Google Maps Direct Link */}
                   <div className="flex items-start gap-2">
                     <div className="p-1 rounded bg-red-50 text-[#D9232D] shrink-0 mt-0.5">
                       <MapPin className="w-3 h-3" />
@@ -345,7 +381,9 @@ export default function ContactPage() {
                         rel="noopener noreferrer"
                         className="font-bold text-slate-900 text-[10px] hover:text-[#D9232D] transition-colors inline-flex items-center gap-1 group"
                       >
-                        <span>Software Technology Parks Of India (STPI), AGRA</span>
+                        <span>
+                          Software Technology Parks Of India (STPI), AGRA
+                        </span>
                         <ExternalLink className="w-2.5 h-2.5 text-slate-400 group-hover:text-[#D9232D] shrink-0" />
                       </a>
                       <div className="text-slate-500 text-[9px] leading-tight">
@@ -354,7 +392,6 @@ export default function ContactPage() {
                     </div>
                   </div>
 
-                  {/* Email */}
                   <div className="flex items-start gap-2">
                     <div className="p-1 rounded bg-red-50 text-[#D9232D] shrink-0">
                       <Mail className="w-3 h-3" />
@@ -372,36 +409,34 @@ export default function ContactPage() {
                     </div>
                   </div>
 
-                 {/* Phone */}
-<div className="flex items-start gap-2">
-  <div className="p-1 rounded bg-red-50 text-[#D9232D] shrink-0">
-    <Phone className="w-3 h-3" />
-  </div>
-  <div>
-    <div className="font-bold text-slate-900 text-[10px]">
-      Direct Line
-    </div>
-    <div className="flex items-center gap-1 text-slate-500 text-[9px]">
-      <a
-        href="tel:+919762650021"
-        className="hover:text-[#D9232D] transition-colors"
-        aria-label="Call +91 9762650021"
-      >
-        +91 9762650021
-      </a>
-      <span>,</span>
-      <a
-        href="tel:+9197626650022"
-        className="hover:text-[#D9232D] transition-colors"
-        aria-label="Call +91 97626650022"
-      >
-        97626650022
-      </a>
-    </div>
-  </div>
-</div>
+                  <div className="flex items-start gap-2">
+                    <div className="p-1 rounded bg-red-50 text-[#D9232D] shrink-0">
+                      <Phone className="w-3 h-3" />
+                    </div>
+                    <div>
+                      <div className="font-bold text-slate-900 text-[10px]">
+                        Direct Line
+                      </div>
+                      <div className="flex items-center gap-1 text-slate-500 text-[9px]">
+                        <a
+                          href="tel:+919762650021"
+                          className="hover:text-[#D9232D] transition-colors"
+                          aria-label="Call +91 9762650021"
+                        >
+                          +91 9762650021
+                        </a>
+                        <span>,</span>
+                        <a
+                          href="tel:+9197626650022"
+                          className="hover:text-[#D9232D] transition-colors"
+                          aria-label="Call +91 97626650022"
+                        >
+                          97626650022
+                        </a>
+                      </div>
+                    </div>
+                  </div>
 
-                  {/* Operating Hours */}
                   <div className="flex items-start gap-2">
                     <div className="p-1 rounded bg-red-50 text-[#D9232D] shrink-0">
                       <Clock className="w-3 h-3" />
@@ -417,15 +452,13 @@ export default function ContactPage() {
                   </div>
                 </div>
 
-                {/* Interactive Clickable Google Map Box with STPI Pin */}
                 <a
                   href={STPI_MAP_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="relative w-full flex-1 min-h-[160px] rounded-xl overflow-hidden border border-slate-200 shadow-inner mt-1 group block cursor-pointer"
+                  className="relative w-full flex-1 min-h-40 rounded-xl overflow-hidden border border-slate-200 shadow-inner mt-1 group block cursor-pointer"
                   title="Click to open STPI Agra in Google Maps"
                 >
-                  {/* Embedded Google Map */}
                   <iframe
                     title="Software Technology Parks Of India (STPI), AGRA"
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3548.878783424683!2d77.9392261763158!3d27.207238976472403!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x397477610029b31d%3A0xb3ef1ad9eeeb238b!2sSTPI%20Agra!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
@@ -438,7 +471,6 @@ export default function ContactPage() {
                     referrerPolicy="no-referrer-when-downgrade"
                   />
 
-                  {/* Center Location Pin Tooltip */}
                   <div className="absolute inset-0 bg-black/5 group-hover:bg-black/15 transition-colors flex items-center justify-center">
                     <div className=" px-2.5 py-1 rounded-full flex items-center gap-1.5 transition-transform group-hover:scale-105">
                       <div className="w-2 h-2 rounded-full bg-[#D9232D] animate-ping" />
@@ -474,7 +506,9 @@ export default function ContactPage() {
             </button>
 
             <div className="text-center space-y-0.5">
-              <h4 className="font-bold text-sm text-slate-800">Security Check</h4>
+              <h4 className="font-bold text-sm text-slate-800">
+                Security Check
+              </h4>
               <p className="text-[10px] text-slate-500">
                 Please verify that you are not a robot
               </p>

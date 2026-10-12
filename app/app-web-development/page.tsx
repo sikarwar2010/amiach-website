@@ -28,6 +28,7 @@ import { Footer } from "@/components/footer";
 export default function AppWebDevelopmentPage() {
   const router = useRouter();
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const [expandedCard, setExpandedCard] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     fullName: "",
     companyName: "",
@@ -36,6 +37,45 @@ export default function AppWebDevelopmentPage() {
     category: "iOS Application",
     description: "",
   });
+
+  const serviceCards = [
+    {
+      title: "Custom Web Applications",
+      icon: Globe,
+      accent: "pink",
+      shortDescription:
+        "Modern, responsive and user-friendly web applications tailored to your business needs.",
+      fullDescription:
+        "From business portals to customer-facing platforms, we create secure, scalable web experiences that simplify operations and improve engagement across your organization.",
+    },
+    {
+      title: "Mobile App Development",
+      icon: Smartphone,
+      accent: "purple",
+      shortDescription:
+        "iOS & Android apps with seamless performance and great user experience.",
+      fullDescription:
+        "We design and develop mobile apps that are intuitive, high-performing, and built to support customer retention, productivity, and digital growth on every device.",
+    },
+    {
+      title: "Enterprise Solutions",
+      icon: Layers,
+      accent: "blue",
+      shortDescription:
+        "Scalable and secure solutions for enterprise-grade operations.",
+      fullDescription:
+        "Our enterprise solutions streamline workflows, centralize data, and improve operational visibility so teams can collaborate faster and make better decisions.",
+    },
+    {
+      title: "UI/UX Design & Development",
+      icon: Layout,
+      accent: "emerald",
+      shortDescription:
+        "Intuitive designs that engage users and drive better results.",
+      fullDescription:
+        "We combine thoughtful research, elegant interfaces, and conversion-focused design to deliver experiences that are both beautiful and highly usable.",
+    },
+  ];
 
   const handleInputChange = (
     e: React.ChangeEvent<
@@ -205,63 +245,84 @@ export default function AppWebDevelopmentPage() {
     </div>
 
     <div className="lg:w-2/3 grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
-      <div className="group bg-white border border-pink-100 rounded-xl p-4 shadow-sm flex items-start gap-3 transition-all duration-300 hover:-translate-y-1.5 hover:border-pink-300 hover:shadow-[0_10px_30px_rgba(236,72,153,0.15)] cursor-pointer">
-        <div className="w-10 h-10 rounded-lg bg-pink-100 text-pink-600 flex items-center justify-center shrink-0">
-          <Globe className="w-5 h-5" />
-        </div>
-        <div>
-          <h3 className="text-xs font-bold text-slate-900">
-            Custom Web Applications
-          </h3>
-          <p className="text-slate-500 text-[11px] mt-1 leading-snug">
-            Modern, responsive and user-friendly web applications tailored
-            to your business needs.
-          </p>
-        </div>
-      </div>
+      {serviceCards.map((service) => {
+        const Icon = service.icon;
+        const isExpanded = expandedCard === service.title;
 
-      <div className="group bg-white border border-purple-100 rounded-xl p-4 shadow-sm flex items-start gap-3 transition-all duration-300 hover:-translate-y-1.5 hover:border-purple-300 hover:shadow-[0_10px_30px_rgba(168,85,247,0.15)] cursor-pointer">
-        <div className="w-10 h-10 rounded-lg bg-purple-100 text-purple-600 flex items-center justify-center shrink-0">
-          <Smartphone className="w-5 h-5" />
-        </div>
-        <div>
-          <h3 className="text-xs font-bold text-slate-900">
-            Mobile App Development
-          </h3>
-          <p className="text-slate-500 text-[11px] mt-1 leading-snug">
-            iOS &amp; Android apps with seamless performance and great
-            user experience.
-          </p>
-        </div>
-      </div>
+        const accentClasses: Record<
+          string,
+          { card: string; icon: string; detail: string }
+        > = {
+          pink: {
+            card: "border-pink-100 hover:border-pink-300 hover:shadow-[0_10px_30px_rgba(236,72,153,0.15)]",
+            icon: "bg-pink-100 text-pink-600",
+            detail: "border-pink-200 bg-pink-50 text-pink-900",
+          },
+          purple: {
+            card: "border-purple-100 hover:border-purple-300 hover:shadow-[0_10px_30px_rgba(168,85,247,0.15)]",
+            icon: "bg-purple-100 text-purple-600",
+            detail: "border-purple-200 bg-purple-50 text-purple-900",
+          },
+          blue: {
+            card: "border-blue-100 hover:border-blue-300 hover:shadow-[0_10px_30px_rgba(59,130,246,0.15)]",
+            icon: "bg-blue-100 text-blue-600",
+            detail: "border-blue-200 bg-blue-50 text-blue-900",
+          },
+          emerald: {
+            card: "border-emerald-100 hover:border-emerald-300 hover:shadow-[0_10px_30px_rgba(16,185,129,0.15)]",
+            icon: "bg-emerald-100 text-emerald-600",
+            detail: "border-emerald-200 bg-emerald-50 text-emerald-900",
+          },
+        };
 
-      <div className="group bg-white border border-blue-100 rounded-xl p-4 shadow-sm flex items-start gap-3 transition-all duration-300 hover:-translate-y-1.5 hover:border-blue-300 hover:shadow-[0_10px_30px_rgba(59,130,246,0.15)] cursor-pointer">
-        <div className="w-10 h-10 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center shrink-0">
-          <Layers className="w-5 h-5" />
-        </div>
-        <div>
-          <h3 className="text-xs font-bold text-slate-900">
-            Enterprise Solutions
-          </h3>
-          <p className="text-slate-500 text-[11px] mt-1 leading-snug">
-            Scalable and secure solutions for enterprise-grade operations.
-          </p>
-        </div>
-      </div>
+        return (
+          <div key={service.title} className="relative">
+            <div
+              tabIndex={0}
+              onMouseEnter={() => setExpandedCard(service.title)}
+              onMouseLeave={() => setExpandedCard(null)}
+              onFocus={() => setExpandedCard(service.title)}
+              onBlur={() => setExpandedCard(null)}
+              onClick={() =>
+                setExpandedCard((current) =>
+                  current === service.title ? null : service.title,
+                )
+              }
+              className={`group bg-white border rounded-xl p-4 shadow-sm flex items-start gap-3 transition-all duration-300 hover:-translate-y-1.5 cursor-pointer ${accentClasses[service.accent].card} ${
+                isExpanded ? "-translate-y-1 border-slate-200 shadow-lg" : ""
+              }`}
+            >
+              <div
+                className={`w-10 h-10 rounded-lg flex items-center justify-center shrink-0 ${accentClasses[service.accent].icon}`}
+              >
+                <Icon className="w-5 h-5" />
+              </div>
+              <div>
+                <h3 className="text-xs font-bold text-slate-900">
+                  {service.title}
+                </h3>
+                <p className="text-slate-500 text-[11px] mt-1 leading-snug">
+                  {service.shortDescription}
+                </p>
+              </div>
+            </div>
 
-      <div className="group bg-white border border-emerald-100 rounded-xl p-4 shadow-sm flex items-start gap-3 transition-all duration-300 hover:-translate-y-1.5 hover:border-emerald-300 hover:shadow-[0_10px_30px_rgba(16,185,129,0.15)] cursor-pointer">
-        <div className="w-10 h-10 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
-          <Layout className="w-5 h-5" />
-        </div>
-        <div>
-          <h3 className="text-xs font-bold text-slate-900">
-            UI/UX Design &amp; Development
-          </h3>
-          <p className="text-slate-500 text-[11px] mt-1 leading-snug">
-            Intuitive designs that engage users and drive better results.
-          </p>
-        </div>
-      </div>
+            <div
+              className={`overflow-hidden transition-all duration-300 ease-out ${
+                isExpanded
+                  ? "mt-2 max-h-40 opacity-100"
+                  : "max-h-0 opacity-0"
+              }`}
+            >
+              <div
+                className={`rounded-xl border px-3 py-2 text-[10px] leading-snug shadow-sm ${accentClasses[service.accent].detail}`}
+              >
+                {service.fullDescription}
+              </div>
+            </div>
+          </div>
+        );
+      })}
     </div>
   </div>
 </section>

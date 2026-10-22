@@ -283,7 +283,7 @@ export default function InternshipTrainingPage() {
                     />
                   </div>
                 </div>
-                <div className="pointer-events-none absolute inset-x-1 bottom-1 z-10 bg-gradient-to-t from-[#050810]/95 via-[#050810]/85 to-transparent px-2 pb-2 pt-7 text-left sm:inset-x-3 sm:bottom-3 sm:px-3 sm:pb-3 sm:pt-10">
+                <div className="pointer-events-none absolute inset-x-1 bottom-1 z-10 bg-linear-to-t from-[#050810]/95 via-[#050810]/85 to-transparent px-2 pb-2 pt-7 text-left sm:inset-x-3 sm:bottom-3 sm:px-3 sm:pb-3 sm:pt-10">
                   <div className="mb-1.5 h-0.5 w-7 rounded-full bg-cyan-300 shadow-[0_0_10px_rgba(103,232,249,0.8)] sm:mb-2 sm:w-9" />
                   <p className="text-[9px] font-medium leading-snug text-white drop-shadow-[0_1px_4px_rgba(0,0,0,0.9)] sm:text-[10px] lg:text-xs">
                     {prog.description}

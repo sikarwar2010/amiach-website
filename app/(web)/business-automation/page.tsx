@@ -214,7 +214,7 @@ function StepVisual({
         {[35, 52, 44, 68, 58, 82].map((height, index) => (
           <div
             key={index}
-            className="flex-1 rounded-t-md bg-gradient-to-t from-[#F9DCA0] to-[#F5A623]"
+            className="flex-1 rounded-t-md bg-linear-to-t from-[#F9DCA0] to-[#F5A623]"
             style={{ height: `${height / 2}px` }}
           />
         ))}
@@ -244,12 +244,12 @@ function ProcessSection() {
       className="relative overflow-hidden"
     >
       {/* ambient background */}
-      <div className="pointer-events-none absolute left-[20%] top-0 h-[100px] w-[100px] rounded-full bg-[#E8E7FF]/60 blur-[120px]" />
+      <div className="pointer-events-none absolute left-[20%] top-0 h-25 w-25 rounded-full bg-[#E8E7FF]/60 blur-[120px]" />
 
-      <div className="pointer-events-none absolute -right-32 top-[35%] h-[350px] w-[350px] rounded-full bg-[#EEE8FF]/70 blur-[110px]" />
+      <div className="pointer-events-none absolute -right-32 top-[35%] h-87.5 w-87.5 rounded-full bg-[#EEE8FF]/70 blur-[110px]" />
 
       {/* Added pt-28 sm:pt-32 lg:pt-36 to prevent navbar overlap on mobile */}
-      <div className="relative mx-auto max-w-[1400px] px-6 pb-12 pt-28 sm:pt-32 lg:pt-36 sm:px-8 lg:px-10">
+      <div className="relative mx-auto max-w-350 px-6 pb-12 pt-28 sm:pt-32 lg:pt-36 sm:px-8 lg:px-10">
         {/* Eyebrow & Hero Container */}
         <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-8">
           <div className="max-w-4xl lg:ml-[8%]">
@@ -266,9 +266,9 @@ function ProcessSection() {
             {/* hero */}
             <div className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-end">
               <div>
-                <h1 className="max-w-[720px] text-[23px] font-black leading-[0.98] tracking-[-0.045em] text-[#101529] sm:text-[30px] lg:text-[38px]">
+                <h1 className="max-w-180 text-[23px] font-black leading-[0.98] tracking-[-0.045em] text-[#101529] sm:text-[30px] lg:text-[38px]">
                   From Idea to
-                  <span className="block bg-gradient-to-r from-[#236BFF] via-[#5366E8] to-[#9A57E8] bg-clip-text text-transparent">
+                  <span className="block bg-linear-to-r from-[#236BFF] via-[#5366E8] to-[#9A57E8] bg-clip-text text-transparent">
                     Solution
                   </span>
                   <span className="block">
@@ -277,7 +277,7 @@ function ProcessSection() {
                 </h1>
               </div>
 
-              <div className="max-w-[470px]">
+              <div className="max-w-117.5">
                 <p className="text-[13px] leading-6 text-[#383d53] sm:text-[14px]">
                   From your initial requirements to a working prototype — without
                   long proposals or endless meetings.
@@ -322,7 +322,7 @@ function ProcessSection() {
       return (
         <article
           key={step.number}
-          className="group relative min-h-[195px] border-t border-[#D9DCE6] px-4 pt-5 pb-6 sm:pb-0 transition-all duration-500 xl:px-5 flex flex-col items-center text-center sm:items-start sm:text-left"
+          className="group relative min-h-48.75 border-t border-[#D9DCE6] px-4 pt-5 pb-6 sm:pb-0 transition-all duration-500 xl:px-5 flex flex-col items-center text-center sm:items-start sm:text-left"
         >
           {/* subtle hover background */}
           <div
@@ -361,25 +361,25 @@ function ProcessSection() {
 
             {/* small arrow appears on hover */}
             <span
-              className="translate-x-[-6px] text-[14px] opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100 text-[#00F2FE]"
+              className="-translate-x-1.5 text-[14px] opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100 text-[#00F2FE]"
             >
               ↗
             </span>
           </div>
 
           {/* Title (centered on mobile) */}
-          <h2 className="mt-4 max-w-[220px] mx-auto sm:mx-0 text-[15px] font-extrabold leading-[1.25] tracking-[-0.02em] text-[#11162A] transition-transform duration-300 group-hover:translate-x-1">
+          <h2 className="mt-4 max-w-55 mx-auto sm:mx-0 text-[15px] font-extrabold leading-tight tracking-[-0.02em] text-[#11162A] transition-transform duration-300 group-hover:translate-x-1">
             {step.title}
           </h2>
 
           {/* Description (centered on mobile) */}
-          <p className="mt-3 max-w-[250px] mx-auto sm:mx-0 text-[11px] leading-[1.7] text-white transition-colors duration-300 group-hover:text-white/90">
+          <p className="mt-3 max-w-62.5 mx-auto sm:mx-0 text-[11px] leading-[1.7] text-white transition-colors duration-300 group-hover:text-white/90">
             {step.text}
           </p>
 
           {/* Bottom accent line */}
           <div
-            className="absolute bottom-0 left-1/2 -translate-x-1/2 sm:left-0 sm:translate-x-0 h-[2px] w-0 transition-all duration-500 group-hover:w-12"
+            className="absolute bottom-0 left-1/2 -translate-x-1/2 sm:left-0 sm:translate-x-0 h-0.5 w-0 transition-all duration-500 group-hover:w-12"
             style={{ backgroundColor: step.accent }}
           />
         </article>
@@ -418,7 +418,7 @@ function ProjectsSection() {
               </span>
             </h2>
 
-            <p className="mt-[20px] max-w-[420px] text-[15px] leading-5 text-[#11162A]">
+            <p className="mt-5 max-w-105 text-[15px] leading-5 text-[#11162A]">
               Real systems built around real operational problems — from
               warehouse workflows and marketplace analytics to financial
               platforms and high-conversion websites.
@@ -448,7 +448,7 @@ function ProjectsSection() {
     </div>
 
     {/* Image container matching exact min-height and bounds */}
-    <div className="relative min-h-[310px] w-full overflow-hidden rounded-b-[12px]">
+    <div className="relative min-h-77.5 w-full overflow-hidden rounded-b-xl">
       <img
         src="/images/businessproject.jpeg"
         alt="Business Project Dashboard"

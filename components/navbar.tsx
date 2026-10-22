@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
@@ -96,7 +95,7 @@ export function Navbar({
 <div className="flex shrink-0 flex-col items-end gap-1.5 sm:gap-2">
   <Link
     href="/about"
-    className={`${navButtonClass} !bg-black !text-white font-bold ${
+    className={`${navButtonClass} bg-black! text-white! font-bold ${
       isAboutActive
         ? "ring-1 ring-white/80 shadow-[0_0_18px_rgba(255,255,255,0.25)]"
         : ""
@@ -107,7 +106,7 @@ export function Navbar({
 
   <Link
     href="/contact"
-    className={`${navButtonClass} !bg-black !text-white font-bold ${
+    className={`${navButtonClass} bg-black! text-white! font-bold ${
       isContactActive
         ? "ring-1 ring-white/80 shadow-[0_0_18px_rgba(255,255,255,0.25)]"
         : ""
@@ -140,3 +139,4 @@ export function Navbar({
     </header>
   );
 }
+
